@@ -1,9 +1,10 @@
 import express from 'express';
+import { todosRoute } from './controllers/todos/todo.router';
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+app.use(express.json({ limit: '1mb' }));
+
+app.use('/todos', todosRoute);
 
 export default app;
