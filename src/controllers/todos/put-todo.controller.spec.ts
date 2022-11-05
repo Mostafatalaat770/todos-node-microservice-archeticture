@@ -10,16 +10,16 @@ describe('putTodoController', () => {
     const route = '/todos/:id';
 
     const app = server((s) => {
-        s.post(route, putTodoController);
+        s.put(route, putTodoController);
     });
 
-    it('creates a todo', async () => {
+    it('updates a todo', async () => {
         const { updateTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
         updateTodo.mockResolvedValue(todo);
 
         const response = await request(app)
-            .post(route.replace(':id', todo.id))
+            .put(route.replace(':id', todo.id))
             .send(todo)
             .expect(200);
         expect(response).toHaveProperty('body', todo);
