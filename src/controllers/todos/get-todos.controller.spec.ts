@@ -6,7 +6,7 @@ import { getTodosController } from './get-todos.controller';
 jest.mock('./todo.dao');
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
-describe('getTodoController', () => {
+describe('getTodosController', () => {
     const route = '/todos';
 
     const app = server((s) => {
