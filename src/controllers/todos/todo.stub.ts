@@ -4,6 +4,6 @@ import { Todo } from './todo.type';
 export const createStubTodo = (): Todo => ({
     id: uuid(),
     name: 'Name',
-    asignee: 'Asignee',
+    assignee: 'Assignee',
     dueDate: new Date().toISOString(),
 });
