@@ -6,7 +6,8 @@
     "scripts": {
         "build": "npx tsc",
         "start": "node dist/src/main.js",
-        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/main.js\"",
+        "pinoPrettify": "npx pino-pretty -i time,hostname,module,__in,name,pid",
+        "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/main.js | yarn pinoPrettify",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --ext .ts --fix",
         "test": "jest"
@@ -16,11 +17,14 @@
     "dependencies": {
         "express": "^4.18.2",
         "express-openapi-validator": "^4.13.8",
+        "express-pino-logger": "^7.0.0",
+        "pino": "^8.7.0",
         "swagger-ui-express": "^4.5.0",
         "uuid": "^9.0.0"
     },
     "devDependencies": {
         "@types/express": "^4.17.14",
+        "@types/express-pino-logger": "^4.0.3",
         "@types/jest": "^29.2.2",
         "@types/node": "^18.11.9",
         "@types/supertest": "^2.0.12",
@@ -37,6 +41,7 @@
         "eslint-plugin-jest": "^27.1.4",
         "jest": "^29.2.2",
         "nodemon": "^2.0.20",
+        "pino-pretty": "^9.1.1",
         "prettier": "^2.7.1",
         "supertest": "^6.3.1",
         "ts-jest": "^29.0.3",
