@@ -13,6 +13,10 @@ describe('deleteTodoController', () => {
         s.delete(route, deleteTodoController);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('deletes a todo', async () => {
         const { deleteTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
@@ -21,5 +25,19 @@ describe('deleteTodoController', () => {
         await request(app).delete(route.replace(':id', todo.id)).expect(204);
 
         expect(deleteTodo).toHaveBeenCalledWith(todo.id);
+    });
+
+    it('rejects an invalid ID', async () => {
+        const { deleteTodo } = require('./todo.dao') as TodoDaoMock;
+        const todoId = '123';
+        deleteTodo.mockResolvedValue();
+        const response = await request(app)
+            .delete(route.replace(':id', todoId))
+            .expect(400);
+        expect(response).toHaveProperty(
+            'body.message',
+            'request.params.id should match format "uuid"'
+        );
+        expect(deleteTodo).not.toHaveBeenCalled();
     });
 });

@@ -14,6 +14,10 @@ describe('getTodoController', () => {
         s.get(route, getTodoController);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('returns the todo with the id', async () => {
         const { getTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
@@ -31,5 +35,19 @@ describe('getTodoController', () => {
         getTodo.mockResolvedValue(undefined);
         await request(app).get(route.replace(':id', todoId)).expect(404);
         expect(getTodo).toHaveBeenCalledWith(todoId);
+    });
+
+    it('rejects an invalid ID', async () => {
+        const { getTodo } = require('./todo.dao') as TodoDaoMock;
+        const todoId = '123';
+        getTodo.mockResolvedValue(undefined);
+        const response = await request(app)
+            .get(route.replace(':id', todoId))
+            .expect(400);
+        expect(response).toHaveProperty(
+            'body.message',
+            'request.params.id should match format "uuid"'
+        );
+        expect(getTodo).not.toHaveBeenCalled();
     });
 });

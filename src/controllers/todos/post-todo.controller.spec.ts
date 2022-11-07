@@ -13,6 +13,10 @@ describe('postTodoController', () => {
         s.post(route, postTodoController);
     });
 
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('creates a todo', async () => {
         const { createTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
@@ -22,5 +26,17 @@ describe('postTodoController', () => {
         expect(response).toHaveProperty('body', todo);
 
         expect(createTodo).toHaveBeenCalledWith(todo);
+    });
+
+    it('rejects an invalid todo', async () => {
+        const { createTodo } = require('./todo.dao') as TodoDaoMock;
+        const todo = createStubTodo();
+        createTodo.mockResolvedValue(todo);
+        const response = await request(app).post(route).send({}).expect(400);
+        expect(response).toHaveProperty(
+            'body.message',
+            "request.body should have required property 'name', request.body should have required property 'assignee', request.body should have required property 'dueDate'"
+        );
+        expect(createTodo).not.toHaveBeenCalled();
     });
 });
