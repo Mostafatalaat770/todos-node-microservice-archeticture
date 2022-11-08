@@ -1,7 +1,8 @@
 import expressPino from 'express-pino-logger';
+import { config } from '../configuration/config';
 
 export const logRequest = (isEnabled = true) =>
     expressPino({
-        level: 'info',
+        level: config.logLevel,
         enabled: isEnabled,
     });

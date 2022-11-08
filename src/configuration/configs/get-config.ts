@@ -1,0 +1,15 @@
+import { Config, Environment, ProcessVariables } from '../config.type';
+import { getLocalConfig } from './get-local-config';
+import { getProductionConfig } from './get-production-config';
+
+export const getConfig = (processVariables: ProcessVariables): Config => {
+    const environment: Environment = processVariables.ENV || 'local';
+    switch (environment) {
+        case 'production':
+            return getProductionConfig(processVariables);
+        case 'local':
+            return getLocalConfig(processVariables);
+        default:
+            throw new Error(`Unknown environment: ${environment}`);
+    }
+};
