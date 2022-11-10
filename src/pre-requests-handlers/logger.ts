@@ -5,4 +5,10 @@ export const logRequest = (isEnabled = true) =>
     expressPino({
         level: config.logLevel,
         enabled: isEnabled,
+        serializers: {
+            req: (req) => ({
+                method: req.method,
+                url: req.url,
+            }),
+        },
     });
