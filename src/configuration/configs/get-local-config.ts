@@ -11,8 +11,8 @@ export const getLocalConfig = (processVariables: ProcessVariables): Config => ({
         host: 'localhost',
         port: 5432,
         user: 'postgres',
-        password: 'postgres',
-        database: 'secret',
+        password: 'secret',
+        database: 'postgres',
         ssl: false,
     },
 });
