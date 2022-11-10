@@ -11,4 +11,8 @@ export const getProductionConfig = (
             processVariables.JWKS_URL ??
             '<JWKS_URL> needs to be set in production environment',
     },
+    database: {
+        connectionString: processVariables.DATABASE_URL,
+        ssl: true,
+    },
 });

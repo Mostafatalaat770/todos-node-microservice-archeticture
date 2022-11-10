@@ -20,6 +20,8 @@
         "express-pino-logger": "^7.0.0",
         "jsonwebtoken": "^8.5.1",
         "jwks-rsa": "^3.0.0",
+        "knex": "^2.3.0",
+        "pg": "^8.8.0",
         "pino": "^8.7.0",
         "swagger-ui-express": "^4.5.0",
         "uuid": "^9.0.0"
@@ -30,6 +32,7 @@
         "@types/jest": "^29.2.2",
         "@types/jsonwebtoken": "^8.5.9",
         "@types/node": "^18.11.9",
+        "@types/pg": "^8.6.5",
         "@types/supertest": "^2.0.12",
         "@types/swagger-ui-express": "^4.1.3",
         "@types/uuid": "^8.3.4",
