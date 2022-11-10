@@ -5,12 +5,14 @@ import { sendErrorResponse } from './error-handling/error-handler';
 import openapi from '../assets/openapi.json';
 import { serveOpenapiSpec } from './pre-requests-handlers/openapi';
 import { logRequest } from './pre-requests-handlers/logger';
+import { healthController } from './controllers/health.controller';
 
 const app = express();
 
 app.use(express.json({ limit: '1mb' }));
 app.use(logRequest());
 app.use('/todos', todosRoute);
+app.use('/health', healthController);
 app.use('/openapi.json', serveOpenapiSpec);
 app.use('/swagger.json', swagger.serve, swagger.setup(openapi));
 
