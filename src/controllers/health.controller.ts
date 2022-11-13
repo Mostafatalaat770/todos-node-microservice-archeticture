@@ -7,7 +7,7 @@ export const healthController = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        await db.from('information_schema.tables').select();
+        await db.from('todos').select('id').limit(1);
         response.status(204).send('OK');
     } catch (error) {
         next(error);
