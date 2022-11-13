@@ -10,7 +10,11 @@
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/main.js | yarn pinoPrettify",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --ext .ts --fix",
-        "test": "jest"
+        "test": "jest",
+        "db:wipe": "docker-compose down; docker volume rm todo_database-data; docker-compose up -d",
+        "db:migrate": "npx knex --knexfile ./src/database/knexfile.ts migrate:latest",
+        "db:seed": "npx knex --knexfile ./src/database/knexfile.ts seed:run",
+        "db:reset": "npm run db:wipe && npm run db:migrate && npm run db:seed"
     },
     "author": "Mostafa Talaat",
     "license": "ISC",
@@ -51,6 +55,7 @@
         "prettier": "^2.7.1",
         "supertest": "^6.3.1",
         "ts-jest": "^29.0.3",
+        "ts-node": "^10.9.1",
         "typescript": "^4.8.4"
     }
 }
