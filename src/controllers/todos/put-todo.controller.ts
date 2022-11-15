@@ -8,7 +8,11 @@ export const putTodoController = async (
 ): Promise<void> => {
     try {
         const todo = await updateTodo(request.params.id, request.body);
-        response.send(todo);
+        if (todo === 'NotFound') {
+            response.status(404).send({ message: 'Todo not found' });
+        } else {
+            response.send(todo);
+        }
     } catch (error) {
         next(error);
     }
