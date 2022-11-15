@@ -56,7 +56,7 @@ describe('putTodoController', () => {
             .expect(400);
         expect(response).toHaveProperty(
             'body.message',
-            'request.body.dueDate should match format "date-time"'
+            'request.body.dueDate should match format "date"'
         );
         expect(updateTodo).not.toHaveBeenCalled();
     });

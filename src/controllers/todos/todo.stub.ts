@@ -5,5 +5,5 @@ export const createStubTodo = (): Todo => ({
     id: uuid(),
     name: 'Name',
     assignee: 'Assignee',
-    dueDate: new Date().toISOString(),
+    dueDate: new Date().toISOString().split('T')[0],
 });
