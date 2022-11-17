@@ -1,7 +1,7 @@
 import { Knex } from 'knex';
 import { Level } from 'pino';
 
-export type Environment = 'production' | 'local';
+export type Environment = 'production' | 'local' | 'test';
 
 export interface Config {
     environment: Environment;
