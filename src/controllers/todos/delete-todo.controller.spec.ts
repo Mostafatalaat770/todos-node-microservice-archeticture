@@ -20,7 +20,7 @@ describe('deleteTodoController', () => {
     it('deletes a todo', async () => {
         const { deleteTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
-        deleteTodo.mockResolvedValue();
+        deleteTodo.mockResolvedValue('OK');
 
         await request(app).delete(route.replace(':id', todo.id)).expect(204);
 
@@ -30,7 +30,7 @@ describe('deleteTodoController', () => {
     it('rejects an invalid ID', async () => {
         const { deleteTodo } = require('./todo.dao') as TodoDaoMock;
         const todoId = '123';
-        deleteTodo.mockResolvedValue();
+        deleteTodo.mockResolvedValue('NotFound');
         const response = await request(app)
             .delete(route.replace(':id', todoId))
             .expect(400);
