@@ -5,7 +5,7 @@ export const up = async (knex: Knex): Promise<void> => {
         table.uuid('id').primary();
         table.string('name').notNullable();
         table.string('assignee').notNullable();
-        table.dateTime('dueDate').notNullable();
+        table.date('dueDate').notNullable();
     });
 };
 
