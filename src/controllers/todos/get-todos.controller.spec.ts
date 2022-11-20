@@ -1,9 +1,15 @@
 import request from 'supertest';
+import { v4 as uuid } from 'uuid';
 import { server } from '../../tests/helpers';
 import { createStubTodo } from './todo.stub';
 import { getTodosController } from './get-todos.controller';
 
+const workspaceId = uuid();
+
 jest.mock('./todo.dao');
+jest.mock('../../jwt-token', () => ({
+    getToken: () => ({ workspaceId }),
+}));
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
 describe('getTodosController', () => {
@@ -21,6 +27,6 @@ describe('getTodosController', () => {
         const response = await request(app).get(route).expect(200);
         expect(response).toHaveProperty('body', todos);
 
-        expect(getTodos).toHaveBeenCalled();
+        expect(getTodos).toHaveBeenCalledWith(workspaceId);
     });
 });

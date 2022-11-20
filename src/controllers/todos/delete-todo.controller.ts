@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { getToken } from '../../jwt-token';
 import { deleteTodo } from './todo.dao';
 
 export const deleteTodoController = async (
@@ -7,7 +8,8 @@ export const deleteTodoController = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        await deleteTodo(request.params.id);
+        const { workspaceId } = getToken(response);
+        await deleteTodo(workspaceId, request.params.id);
         response.sendStatus(204);
     } catch (error) {
         next(error);
