@@ -27,4 +27,4 @@ jobs:
             - name: Build
               run: yarn build
             - name: Run tests
-              run: yarn test --runInBand --detectOpenHandles
+              run: yarn test --forceExit --detectOpenHandles
