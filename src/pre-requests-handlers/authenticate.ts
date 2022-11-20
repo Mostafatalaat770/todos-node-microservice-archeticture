@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import JwksRsa from 'jwks-rsa';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { config } from '../configuration/config';
+import { JwtTokenPayload } from '../jwt-token';
 
 const jwksClient = JwksRsa({
     jwksUri: config.authentication.jwksUrl,
 });
+
+const isValidPayload = (
+    payload: string | JwtPayload
+): payload is JwtTokenPayload =>
+    typeof payload !== 'string' && 'workspaceId' in payload;
 
 export const authenticate = async (
     request: Request,
@@ -35,7 +41,13 @@ export const authenticate = async (
                 return response.status(403).end();
             }
         }
+
+        if (!isValidPayload(decodedToken.payload)) {
+            throw new Error('Unexpected structure of JWT payload');
+        }
+
         response.locals.token = decodedToken.payload;
+
         next();
     } catch (error) {
         next(error);
