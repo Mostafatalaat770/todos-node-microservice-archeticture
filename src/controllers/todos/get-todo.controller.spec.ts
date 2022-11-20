@@ -4,7 +4,12 @@ import { server } from '../../tests/helpers';
 import { getTodoController } from './get-todo.controller';
 import { createStubTodo } from './todo.stub';
 
+const workspaceId = uuid();
+
 jest.mock('./todo.dao');
+jest.mock('../../jwt-token', () => ({
+    getToken: () => ({ workspaceId }),
+}));
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
 describe('getTodoController', () => {
@@ -26,7 +31,7 @@ describe('getTodoController', () => {
             .get(route.replace(':id', todo.id))
             .expect(200);
         expect(response).toHaveProperty('body', todo);
-        expect(getTodo).toHaveBeenCalledWith(todo.id);
+        expect(getTodo).toHaveBeenCalledWith(workspaceId, todo.id);
     });
 
     it('returns a 404 if no todo with that id exists', async () => {
@@ -34,7 +39,7 @@ describe('getTodoController', () => {
         const todoId = uuid();
         getTodo.mockResolvedValue(undefined);
         await request(app).get(route.replace(':id', todoId)).expect(404);
-        expect(getTodo).toHaveBeenCalledWith(todoId);
+        expect(getTodo).toHaveBeenCalledWith(workspaceId, todoId);
     });
 
     it('rejects an invalid ID', async () => {

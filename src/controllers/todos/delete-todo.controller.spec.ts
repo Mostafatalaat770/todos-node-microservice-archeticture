@@ -1,9 +1,15 @@
 import request from 'supertest';
+import { v4 as uuid } from 'uuid';
 import { server } from '../../tests/helpers';
 import { deleteTodoController } from './delete-todo.controller';
 import { createStubTodo } from './todo.stub';
 
+const workspaceId = uuid();
+
 jest.mock('./todo.dao');
+jest.mock('../../jwt-token', () => ({
+    getToken: () => ({ workspaceId }),
+}));
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
 describe('deleteTodoController', () => {
@@ -24,7 +30,7 @@ describe('deleteTodoController', () => {
 
         await request(app).delete(route.replace(':id', todo.id)).expect(204);
 
-        expect(deleteTodo).toHaveBeenCalledWith(todo.id);
+        expect(deleteTodo).toHaveBeenCalledWith(workspaceId, todo.id);
     });
 
     it('rejects an invalid ID', async () => {

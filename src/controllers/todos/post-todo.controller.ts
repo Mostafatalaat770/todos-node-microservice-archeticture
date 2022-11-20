@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { getToken } from '../../jwt-token';
 import { createTodo } from './todo.dao';
 
 export const postTodoController = async (
@@ -7,7 +8,8 @@ export const postTodoController = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const todo = await createTodo(request.body);
+        const { workspaceId } = getToken(response);
+        const todo = await createTodo(workspaceId, request.body);
         response.status(201).send(todo);
     } catch (error) {
         next(error);

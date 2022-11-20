@@ -1,9 +1,16 @@
 import request from 'supertest';
+import { v4 as uuid } from 'uuid';
 import { server } from '../../tests/helpers';
 import { postTodoController } from './post-todo.controller';
 import { createStubTodo } from './todo.stub';
 
+const workspaceId = uuid();
+
 jest.mock('./todo.dao');
+jest.mock('../../jwt-token', () => ({
+    getToken: () => ({ workspaceId }),
+}));
+
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
 describe('postTodoController', () => {
@@ -25,7 +32,7 @@ describe('postTodoController', () => {
         const response = await request(app).post(route).send(todo).expect(201);
         expect(response).toHaveProperty('body', todo);
 
-        expect(createTodo).toHaveBeenCalledWith(todo);
+        expect(createTodo).toHaveBeenCalledWith(workspaceId, todo);
     });
 
     it('rejects an invalid todo', async () => {
