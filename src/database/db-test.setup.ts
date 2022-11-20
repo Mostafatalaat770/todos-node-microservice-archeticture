@@ -35,6 +35,7 @@ const shareContainerForTeardown = (container: StartedTestContainer) => {
 const setupDatabase = async (): Promise<void> => {
     const container = await spawnDatabase();
     await shareDatabaseConfig(container);
+    shareContainerForTeardown(container);
 };
 
 export default setupDatabase;
