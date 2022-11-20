@@ -9,7 +9,8 @@ const readDatabasePort = (): number | undefined => {
         'jest_testcontainers_global_setup'
     );
     const port = readFileSync(path.join(variablesDir, 'databasePort'), 'utf8');
-    return port ? parseInt(port, 10) : undefined;
+    // eslint-disable-next-line radix
+    return port ? parseInt(port) : undefined;
 };
 
 export const getTestConfig = (processVariables: ProcessVariables): Config => ({
