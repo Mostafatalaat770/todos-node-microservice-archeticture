@@ -11,6 +11,9 @@ export interface Config {
         jwksUrl: string;
     };
     database: Knex.PgConnectionConfig;
+    http: {
+        servicesUrl: string;
+    };
 }
 
 export interface ProcessVariables {
@@ -18,4 +21,5 @@ export interface ProcessVariables {
     LOG_LEVEL?: Level;
     JWKS_URL?: string;
     DATABASE_URL?: string;
+    SERVICES_URL?: string;
 }

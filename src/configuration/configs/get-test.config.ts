@@ -28,4 +28,7 @@ export const getTestConfig = (processVariables: ProcessVariables): Config => ({
         password: 'secret',
         ssl: false,
     },
+    http: {
+        servicesUrl: 'http://localhost:3001',
+    },
 });

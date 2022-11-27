@@ -15,4 +15,9 @@ export const getProductionConfig = (
         connectionString: processVariables.DATABASE_URL,
         ssl: true,
     },
+    http: {
+        servicesUrl:
+            processVariables.SERVICES_URL ??
+            '<SERVICES_URL> needs to be set in production environment',
+    },
 });

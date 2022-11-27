@@ -15,4 +15,7 @@ export const getLocalConfig = (processVariables: ProcessVariables): Config => ({
         database: 'postgres',
         ssl: false,
     },
+    http: {
+        servicesUrl: 'http://localhost:3001',
+    },
 });
