@@ -1,11 +1,17 @@
-import express from 'express';
+import * as http from 'http';
 import app from './app';
+import { configureHttp } from './http/configure-http';
+import { logger } from './logger';
 
-const server = express();
-const port = 3000;
+const main = async () => {
+    const PORT = process.env.PORT || 3000;
+    configureHttp();
+    const server = http.createServer(app);
+    server.listen(PORT, () => {
+        logger.info(`Server is listening on port ${PORT}!`);
+    });
+};
 
-server.use(app);
-
-server.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+main().catch((error) => {
+    logger.error(error);
 });
