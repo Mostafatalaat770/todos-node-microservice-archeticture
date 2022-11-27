@@ -10,6 +10,8 @@ jest.mock('./todo.dao');
 jest.mock('../../jwt-token', () => ({
     getToken: () => ({ workspaceId }),
 }));
+jest.mock('./notification.service');
+
 type TodoDaoMock = jest.Mocked<typeof import('./todo.dao')>;
 
 describe('deleteTodoController', () => {
@@ -23,14 +25,17 @@ describe('deleteTodoController', () => {
         jest.clearAllMocks();
     });
 
-    it('deletes a todo', async () => {
+    it('deletes the todo, sends a notification and returns a 204', async () => {
         const { deleteTodo } = require('./todo.dao') as TodoDaoMock;
         const todo = createStubTodo();
         deleteTodo.mockResolvedValue('OK');
-
+        const { sendNotification } = require('./notification.service');
         await request(app).delete(route.replace(':id', todo.id)).expect(204);
 
         expect(deleteTodo).toHaveBeenCalledWith(workspaceId, todo.id);
+        expect(sendNotification).toHaveBeenCalledWith(
+            `deleted todo ${todo.id}`
+        );
     });
 
     it('rejects an invalid ID', async () => {
