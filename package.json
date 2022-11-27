@@ -5,7 +5,6 @@
     "main": "main.ts",
     "scripts": {
         "build": "npx tsc",
-        "start": "node dist/src/main.js",
         "pinoPrettify": "npx pino-pretty -i time,hostname,module,__in,name,pid",
         "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/src/main.js | yarn pinoPrettify",
         "lint": "eslint . --ext .ts",
@@ -14,7 +13,11 @@
         "db:wipe": "docker-compose down && docker volume rm todo_database-data && docker-compose up -d",
         "db:migrate": "npx knex --knexfile ./src/database/knexfile.ts migrate:latest",
         "db:seed": "npx knex --knexfile ./src/database/knexfile.ts seed:run",
-        "db:reset": "npm run db:wipe && npm run db:migrate && npm run db:seed"
+        "db:reset": "npm run db:wipe && npm run db:migrate && npm run db:seed",
+        "start": "npm run build && npx concurrently \"npm:start:*\"",
+        "start:dev": "npm run dev",
+        "start:ts": "tsc --watch --incremental",
+        "start:mocks": "npx mockserver -p 3001 -m mocks"
     },
     "author": "Mostafa Talaat",
     "license": "ISC",
