@@ -21,6 +21,9 @@ export const mockControllerInputs = (
     next: NextFunction;
 } => ({
     request: {
+        log: {
+            error: jest.fn().mockImplementation(),
+        },
         params: {},
         ...request,
     } as unknown as Request,
@@ -29,6 +32,7 @@ export const mockControllerInputs = (
         status: jest.fn().mockReturnThis(),
         sendStatus: jest.fn(),
         send: jest.fn(),
+        json: jest.fn(),
         end: jest.fn().mockReturnThis(),
     } as unknown as Response,
     next: jest.fn() as NextFunction,
