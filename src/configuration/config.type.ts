@@ -13,6 +13,8 @@ export interface Config {
     database: Knex.PgConnectionConfig;
     http: {
         servicesUrl: string;
+        clientId: string;
+        clientSecret: string;
     };
 }
 
@@ -22,4 +24,6 @@ export interface ProcessVariables {
     JWKS_URL?: string;
     DATABASE_URL?: string;
     SERVICES_URL?: string;
+    CLIENT_ID?: string;
+    CLIENT_SECRET?: string;
 }

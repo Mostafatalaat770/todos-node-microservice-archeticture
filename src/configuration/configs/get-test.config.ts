@@ -30,5 +30,7 @@ export const getTestConfig = (processVariables: ProcessVariables): Config => ({
     },
     http: {
         servicesUrl: 'http://localhost:3001',
+        clientId: 'todos',
+        clientSecret: 'secret',
     },
 });

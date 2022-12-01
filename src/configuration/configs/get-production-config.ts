@@ -19,5 +19,11 @@ export const getProductionConfig = (
         servicesUrl:
             processVariables.SERVICES_URL ??
             '<SERVICES_URL> needs to be set in production environment',
+        clientId:
+            processVariables.CLIENT_ID ??
+            '<CLIENT_ID> needs to be set in production environment',
+        clientSecret:
+            processVariables.CLIENT_SECRET ??
+            '<CLIENT_SECRET> needs to be set in production environment',
     },
 });

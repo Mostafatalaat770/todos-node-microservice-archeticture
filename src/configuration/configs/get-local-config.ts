@@ -17,5 +17,7 @@ export const getLocalConfig = (processVariables: ProcessVariables): Config => ({
     },
     http: {
         servicesUrl: 'http://localhost:3001',
+        clientId: 'todos',
+        clientSecret: 'secret',
     },
 });
