@@ -11,7 +11,10 @@ export const deleteTodoController = async (
     try {
         const { workspaceId } = getToken(response);
         await deleteTodo(workspaceId, request.params.id);
-        await sendNotification(`deleted todo ${request.params.id}`);
+        await sendNotification(
+            workspaceId,
+            `deleted todo ${request.params.id}`
+        );
         response.sendStatus(204);
     } catch (error) {
         next(error);
