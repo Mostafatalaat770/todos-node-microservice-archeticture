@@ -34,6 +34,7 @@ describe('deleteTodoController', () => {
 
         expect(deleteTodo).toHaveBeenCalledWith(workspaceId, todo.id);
         expect(sendNotification).toHaveBeenCalledWith(
+            workspaceId,
             `deleted todo ${todo.id}`
         );
     });
