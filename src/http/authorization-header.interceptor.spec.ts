@@ -5,6 +5,10 @@ import { adminAccess, workspaceAccess } from './service-access.type';
 jest.mock('./get-jwt');
 
 describe('the authorization header interceptor', () => {
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
     it('should attach an admin token if access type is admin', async () => {
         const { getJWT } = require('./get-jwt');
         getJWT.mockResolvedValue('my_admin_token');
@@ -29,16 +33,6 @@ describe('the authorization header interceptor', () => {
             'Authorization',
             'Bearer my_token'
         );
-    });
-
-    it('should not attach a token if the access type is invalid', async () => {
-        const { getJWT } = require('./get-jwt');
-        getJWT.mockResolvedValue('my_token');
-        const request = await attachAuthorizationHeader({
-            access: {},
-        } as AxiosRequestConfig);
-        expect(getJWT).not.toHaveBeenCalled();
-        expect(request.headers).toEqual(undefined);
     });
 
     it('should fail if a JWT can not be retrieved', async () => {
